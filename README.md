@@ -1,7 +1,6 @@
 # 💳 Luhn Card Validator (Python, CLI, Termux-friendly)
 
 Bu sadə Python skripti vasitəsilə bank kartlarının **Luhn alqoritmi** ilə düzgünlüyünü yoxlaya bilərsiniz.  
-Həm **interaktiv (input)**, həm də **fayldan çoxlu kart yoxlama** dəstəklənir.
 
 ---
 
@@ -9,7 +8,6 @@ Həm **interaktiv (input)**, həm də **fayldan çoxlu kart yoxlama** dəstəkl�
 
 - ✅ 16 rəqəmli kart nömrələrinin düzgünlüyünü yoxlayır
 - 🧠 Luhn alqoritmi ilə yoxlama aparır
-- 📂 `cards.txt` faylından oxuyaraq çoxlu kart yoxlayır
 - 📱 Android Termux-da problemsiz işləyir
 
 ---
