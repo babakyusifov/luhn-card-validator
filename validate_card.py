@@ -1,61 +1,28 @@
-from typing import Union
+from validate import validate_card_number
 
-def validate_card_number(card_number: Union[str, int]) -> bool:
-    card_str = str(card_number).replace(" ", "")
-    
-    if not card_str.isdigit():
-        raise ValueError("Kart nömrəsi yalnız rəqəmlərdən ibarət olmalıdır.")
-    if len(card_str) != 16:
-        raise ValueError("Kart nömrəsi 16 rəqəmdən ibarət olmalıdır.")
+def main():
+    print("💳 Luhn Kart Nömrəsi Yoxlayıcısı")
+    print("Çıxmaq üçün 'q' yazın.\n")
 
-    total = 0
-    reverse_digits = card_str[::-1]
+    while True:
+        card = input("Kart nömrəsini daxil edin: ").strip()
 
-    for i, digit in enumerate(reverse_digits):
-        n = int(digit)
-        if i % 2 == 1:
-            n *= 2
-            if n > 9:
-                n -= 9
-        total += n
+        if card.lower() == 'q':
+            print("Çıxılır...")
+            break
 
-    return total % 10 == 0
-
-
-def process_cards_file(file_path: str):
-    try:
-        with open(file_path, 'r') as f:
-            lines = f.readlines()
-    except FileNotFoundError:
-        print(f"❌ Fayl tapılmadı: {file_path}")
-        return
-
-    for line in lines:
-        card = line.strip()
-        if not card:
-            continue
         try:
-            if validate_card_number(card):
-                print(f"✅ {card} - düzgündür.")
-            else:
-                print(f"❌ {card} - düzgün deyil.")
+            result = validate_card_number(card)
+            print(f"➡️  {card}: {'✅ Doğrudur' if result else '❌ Yanlışdır'}")
         except ValueError as e:
-            print(f"⚠️  {card} - xəta: {e}")
+            print(f"⚠️  Xəta: {e}")
 
+        # Yeni sorğu
+        again = input("\nBaşqa kart yoxlamaq istəyirsiniz? (bəli / xeyr): ").strip().lower()
+        if again not in ['bəli', 'beli', 'hə', 'he', 'yes', 'y']:
+            print("Proqram sonlandırıldı.")
+            break
+        print("")  # boş sətir ayırmaq üçün
 
 if __name__ == "__main__":
-    mode = input("📌 Bir kart yoxlamaq (1) yoxsa fayldan oxumaq (2)? [1/2]: ").strip()
-
-    if mode == "1":
-        card = input("Kart nömrəsini daxil et: ")
-        try:
-            if validate_card_number(card):
-                print("✅ Kart nömrəsi düzgündür.")
-            else:
-                print("❌ Kart nömrəsi düzgün deyil.")
-        except ValueError as e:
-            print("⚠️  Xəta:", e)
-    elif mode == "2":
-        process_cards_file("cards.txt")
-    else:
-        print("⚠️  Seçim düzgün deyil.")
+    main()
